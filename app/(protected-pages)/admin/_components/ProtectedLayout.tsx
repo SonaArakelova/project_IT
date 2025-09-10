@@ -124,7 +124,7 @@ export function ProtectedLayout({
           </div>
         </Content>
         <Footer style={{ textAlign: 'center' }}>
-          React ©{new Date().getFullYear()} Created by Mentor "Hayk"
+          React ©{new Date().getFullYear()} Created by Mentor 'Hayk'
         </Footer>
       </Layout>
     </Layout>
