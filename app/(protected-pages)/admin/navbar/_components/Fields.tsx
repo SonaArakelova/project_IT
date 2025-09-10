@@ -43,7 +43,6 @@
 
 
 
-
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -75,7 +74,7 @@ export function Fields() {
   const [selectedLang, setSelectedLang] = useState<Lang>('en');
   const [fields, setFields] = useState(translations[selectedLang]);
 
-  // Update fields when language changes
+  // Update fields
   useEffect(() => {
     setFields(translations[selectedLang]);
   }, [selectedLang]);
