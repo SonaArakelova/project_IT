@@ -12,6 +12,8 @@ import {
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Breadcrumb, Layout, Menu, theme, Spin } from 'antd';
+import '@ant-design/v5-patch-for-react-19';
+
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -124,7 +126,7 @@ export function ProtectedLayout({
           </div>
         </Content>
         <Footer style={{ textAlign: 'center' }}>
-          React ©{new Date().getFullYear()} Created by Mentor 'Hayk'
+          React ©{new Date().getFullYear()} Created by ...
         </Footer>
       </Layout>
     </Layout>
@@ -234,9 +236,6 @@ export function ProtectedLayout({
 //     </Layout>
 //   );
 // };
-
-
-
 
 
 
