@@ -8,6 +8,7 @@ import '@ant-design/v5-patch-for-react-19';
 
 const { Option } = Select;
 
+
 type FormValues = {
   email: string;
   password1: string;
@@ -121,7 +122,7 @@ export function RegisterForm() {
       <Form.Item
         name="password2"
         label="Confirm Password"
-        dependencies={['password']}
+        dependencies={['password1']}
         hasFeedback
         rules={[
           {
@@ -130,7 +131,7 @@ export function RegisterForm() {
           },
           ({ getFieldValue }) => ({
             validator(_, value) {
-              if (!value || getFieldValue('password') === value) {
+              if (!value || getFieldValue('password1') === value) {
                 return Promise.resolve();
               }
               return Promise.reject(new Error('The new password that you entered do not match!'));

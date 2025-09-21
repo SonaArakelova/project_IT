@@ -1,9 +1,10 @@
-import {Fields} from "./_components/Fields";
+import { List } from "./_components/List";
+
 
 export default function page() {
   return (
     <div>
-        <Fields/> 
+        <List/> 
         </div>
   )
 }
