@@ -2,85 +2,112 @@
 
 import React, { useState } from 'react';
 import { Button, Row, Col, Input, Select, Space } from 'antd';
-import { CloseOutlined } from '@ant-design/icons';
+import '@ant-design/v5-patch-for-react-19';
+
+
+type NavRow = {
+  label: string;
+  url: string;
+  order: number;
+};
+
 
 export function Fields() {
   const [selectedLang, setSelectedLang] = useState('en');
 
+
   // English 
-  const [rowsEn, setRowsEn] = useState([
-    { label: 'Programs', url: '/programs' },
-    { label: 'About', url: '/about' },
-    { label: 'Contact', url: '/contact' },
+  const [rowsEn, setRowsEn] = useState<NavRow[]>([
+    { label: 'Programs', url: '/programs', order: 1 },
+    { label: 'About', url: '/about', order: 2 },
+    { label: 'Contact', url: '/contact', order: 3 },
   ]);
-  const addRowEn = () => setRowsEn([...rowsEn, { label: '', url: '' }]);
-  const deleteRowEn = (index: number) => setRowsEn(rowsEn.filter((_, i) => i !== index));
-  const updateRowEn = (index: number, field: 'label' | 'url', value: string) => {
+  const addRowEn = () => setRowsEn([...rowsEn, { label: '', url: '', order: rowsEn.length + 1 }]);
+  const updateRowEn = <K extends keyof NavRow>(
+    index: number,
+    field: K,
+    value: NavRow[K]
+  ) => {
     const newRows = [...rowsEn];
     newRows[index][field] = value;
     setRowsEn(newRows);
   };
-  const moveRowEn = (index: number, direction: 'up' | 'down') => {
-    const newRows = [...rowsEn];
-    if (direction === 'up' && index > 0) {
-      [newRows[index - 1], newRows[index]] = [newRows[index], newRows[index - 1]];
-      setRowsEn(newRows);
-    } else if (direction === 'down' && index < newRows.length - 1) {
-      [newRows[index + 1], newRows[index]] = [newRows[index], newRows[index + 1]];
-      setRowsEn(newRows);
-    }
+  const deleteRowEn = (index: number) => {
+    const newRows = rowsEn.filter((_, i) => i !== index);
+    const reOrdered = newRows.map((row, i) => ({ ...row, order: i + 1 }));
+    setRowsEn(reOrdered);
   };
 
+
   // Armenian 
-  const [rowsAm, setRowsAm] = useState([
-    { label: 'Ծրագրեր', url: '/programs' },
-    { label: 'Մեր մասին', url: '/about' },
-    { label: 'Կապ', url: '/contact' },
+  const [rowsAm, setRowsAm] = useState<NavRow[]>([
+    { label: 'Ծրագրեր', url: '/programs', order: 1 },
+    { label: 'Մեր մասին', url: '/about', order: 2 },
+    { label: 'Կապ', url: '/contact', order: 3 },
   ]);
-  const addRowAm = () => setRowsAm([...rowsAm, { label: '', url: '' }]);
-  const deleteRowAm = (index: number) => setRowsAm(rowsAm.filter((_, i) => i !== index));
-  const updateRowAm = (index: number, field: 'label' | 'url', value: string) => {
+
+  const addRowAm = () => setRowsAm([...rowsEn, { label: '', url: '', order: rowsAm.length + 1 }]);
+  const deleteRowAm = (index: number) => {
+    const newRows = rowsAm.filter((_, i) => i !== index);
+    const reOrdered = newRows.map((row, i) => ({ ...row, order: i + 1 }));
+    setRowsAm(reOrdered);
+  };
+  const updateRowAm = <K extends keyof NavRow>(
+    index: number,
+    field: K,
+    value: NavRow[K]
+  ) => {
     const newRows = [...rowsAm];
     newRows[index][field] = value;
     setRowsAm(newRows);
   };
-  const moveRowAm = (index: number, direction: 'up' | 'down') => {
-    const newRows = [...rowsAm];
-    if (direction === 'up' && index > 0) {
-      [newRows[index - 1], newRows[index]] = [newRows[index], newRows[index - 1]];
-      setRowsAm(newRows);
-    } else if (direction === 'down' && index < newRows.length - 1) {
-      [newRows[index + 1], newRows[index]] = [newRows[index], newRows[index + 1]];
-      setRowsAm(newRows);
-    }
-  };
+
 
   // Russian 
-  const [rowsRu, setRowsRu] = useState([
-    { label: 'Программы', url: '/programs' },
-    { label: 'О нас', url: '/about' },
-    { label: 'Контакты', url: '/contact' },
+  const [rowsRu, setRowsRu] = useState<NavRow[]>([
+    { label: 'Программы', url: '/programs', order: 1 },
+    { label: 'О нас', url: '/about', order: 2 },
+    { label: 'Контакты', url: '/contact', order: 3 },
   ]);
-  const addRowRu = () => setRowsRu([...rowsRu, { label: '', url: '' }]);
-  const deleteRowRu = (index: number) => setRowsRu(rowsRu.filter((_, i) => i !== index));
-  const updateRowRu = (index: number, field: 'label' | 'url', value: string) => {
+
+  const addRowRu = () => {
+    const nextOrder = rowsRu.length + 1;
+    setRowsRu([...rowsRu, { label: '', url: '', order: nextOrder }]);
+  };
+
+  const deleteRowRu = (index: number) => {
+    const filtered = rowsRu.filter((_, i) => i !== index);
+    const reOrdered = filtered.map((row, i) => ({ ...row, order: i + 1 }));
+    setRowsRu(reOrdered);
+  };
+
+  const updateRowRu = <K extends keyof NavRow>(
+    index: number,
+    field: K,
+    value: NavRow[K]
+  ) => {
     const newRows = [...rowsRu];
     newRows[index][field] = value;
     setRowsRu(newRows);
   };
-  const moveRowRu = (index: number, direction: 'up' | 'down') => {
-    const newRows = [...rowsRu];
-    if (direction === 'up' && index > 0) {
-      [newRows[index - 1], newRows[index]] = [newRows[index], newRows[index - 1]];
-      setRowsRu(newRows);
-    } else if (direction === 'down' && index < newRows.length - 1) {
-      [newRows[index + 1], newRows[index]] = [newRows[index], newRows[index + 1]];
-      setRowsRu(newRows);
-    }
-  };
 
+
+  ////
   const handleChange = (value: string) => {
     setSelectedLang(value);
+  };
+
+  const handleSave = (index: number) => {
+    let row;
+    if (selectedLang === 'en') {
+      row = rowsEn[index];
+    } else if (selectedLang === 'am') {
+      row = rowsAm[index];
+    } else if (selectedLang === 'ru') {
+      row = rowsRu[index];
+    }
+
+    console.log(`Saving row ${index + 1}:`, row);
   };
 
 
@@ -108,8 +135,8 @@ export function Fields() {
           {selectedLang === 'en'
             ? 'Add Row'
             : selectedLang === 'am'
-            ? 'Ավելացնել տող'
-            : 'Добавить строку'}
+              ? 'Ավելացնել տող'
+              : 'Добавить строку'}
         </Button>
       </Space>
 
@@ -117,38 +144,47 @@ export function Fields() {
         <Space direction="vertical" className="w-full">
           {rowsEn.map((row, index) => (
             <Row gutter={16} align="middle" key={index}>
-              <Col span={8}>
+              <Col span={6}>
                 <Input
                   value={row.label}
                   onChange={(e) => updateRowEn(index, 'label', e.target.value)}
+                  placeholder="Label"
                 />
               </Col>
-              <Col span={8}>
+              <Col span={6}>
                 <Input
                   value={row.url}
                   onChange={(e) => updateRowEn(index, 'url', e.target.value)}
+                  placeholder="URL"
+                />
+              </Col>
+              <Col span={4}>
+                <Input
+                  type="number"
+                  min={1}
+                  step={1}
+                  value={row.order}
+                  onChange={(e) => {
+                    const val = Number(e.target.value);
+                    if (val >= 1) {
+                      updateRowEn(index, 'order', val);
+                    }
+                  }} placeholder="Order"
                 />
               </Col>
               <Col span={8}>
                 <Space>
-                  <Button type="primary">Save</Button>
+                  <Button type="primary" onClick={() => handleSave(index)}>Save</Button>
                   <Button
-                    disabled={index === 0}
-                    onClick={() => moveRowEn(index, 'up')}
-                  >
-                    ⬆️
+                    danger
+                    onClick={() => deleteRowEn(index)}
+                  > Delete
                   </Button>
-                  <Button
-                    disabled={index === rowsEn.length - 1}
-                    onClick={() => moveRowEn(index, 'down')}
-                  >
-                    ⬇️
-                  </Button>
-                  <Button danger onClick={() => deleteRowEn(index)} icon={<CloseOutlined />} />
                 </Space>
               </Col>
             </Row>
           ))}
+
           {rowsEn.length === 0 && <div>No rows available</div>}
         </Space>
       )}
@@ -157,38 +193,41 @@ export function Fields() {
         <Space direction="vertical" className="w-full">
           {rowsAm.map((row, index) => (
             <Row gutter={16} align="middle" key={index}>
-              <Col span={8}>
+              <Col span={6}>
                 <Input
                   value={row.label}
                   onChange={(e) => updateRowAm(index, 'label', e.target.value)}
+                  placeholder="Պիտակ"
                 />
               </Col>
-              <Col span={8}>
+              <Col span={6}>
                 <Input
                   value={row.url}
                   onChange={(e) => updateRowAm(index, 'url', e.target.value)}
+                  placeholder="Հասցե"
+                />
+              </Col>
+              <Col span={4}>
+                <Input
+                  type="number"
+                  value={row.order}
+                  onChange={(e) => updateRowAm(index, 'order', Number(e.target.value))}
+                  placeholder="Հերթականություն"
                 />
               </Col>
               <Col span={8}>
                 <Space>
-                  <Button type="primary">Պահպանել</Button>
-                  <Button
-                    disabled={index === 0}
-                    onClick={() => moveRowAm(index, 'up')}
-                  >
-                    ⬆️
+                  <Button type="primary" onClick={() => handleSave(index)}>Պահպանել</Button>
+                  <Button danger onClick={() => deleteRowAm(index)} >
+                    Ջնջել
                   </Button>
-                  <Button
-                    disabled={index === rowsAm.length - 1}
-                    onClick={() => moveRowAm(index, 'down')}
-                  >
-                    ⬇️
-                  </Button>
-                  <Button danger onClick={() => deleteRowAm(index)} icon={<CloseOutlined />} />
+
+
                 </Space>
               </Col>
             </Row>
           ))}
+
           {rowsAm.length === 0 && <div>No rows available</div>}
         </Space>
       )}
@@ -197,41 +236,49 @@ export function Fields() {
         <Space direction="vertical" className="w-full">
           {rowsRu.map((row, index) => (
             <Row gutter={16} align="middle" key={index}>
-              <Col span={8}>
+              <Col span={6}>
                 <Input
                   value={row.label}
                   onChange={(e) => updateRowRu(index, 'label', e.target.value)}
+                  placeholder="Метка"
                 />
               </Col>
-              <Col span={8}>
+              <Col span={6}>
                 <Input
                   value={row.url}
                   onChange={(e) => updateRowRu(index, 'url', e.target.value)}
+                  placeholder="Ссылка"
+                />
+              </Col>
+              <Col span={4}>
+                <Input
+                  type="number"
+                  min={1}
+                  step={1}
+                  value={row.order}
+                  onChange={(e) => {
+                    const val = Number(e.target.value);
+                    if (val >= 1) {
+                      updateRowRu(index, 'order', val);
+                    }
+                  }}
+                  placeholder="Порядок"
                 />
               </Col>
               <Col span={8}>
                 <Space>
-                  <Button type="primary">Сохранить</Button>
-                  <Button
-                    disabled={index === 0}
-                    onClick={() => moveRowRu(index, 'up')}
-                  >
-                    ⬆️
+                  <Button type="primary" onClick={() => handleSave(index)}>Сохранить</Button>
+                  <Button danger onClick={() => deleteRowRu(index)} >
+                    Удалить
                   </Button>
-                  <Button
-                    disabled={index === rowsRu.length - 1}
-                    onClick={() => moveRowRu(index, 'down')}
-                  >
-                    ⬇️
-                  </Button>
-                  <Button danger onClick={() => deleteRowRu(index)} icon={<CloseOutlined />} />
                 </Space>
               </Col>
             </Row>
           ))}
-          {rowsRu.length === 0 && <div>No rows available</div>}
+          {rowsRu.length === 0 && <div> No rows available</div>}
         </Space>
       )}
+
     </Space>
   );
 }

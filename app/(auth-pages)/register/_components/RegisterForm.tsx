@@ -8,7 +8,6 @@ import '@ant-design/v5-patch-for-react-19';
 
 const { Option } = Select;
 
-
 type FormValues = {
   email: string;
   password1: string;
