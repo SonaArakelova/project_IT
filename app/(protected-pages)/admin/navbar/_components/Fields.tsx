@@ -144,6 +144,21 @@ export function Fields() {
         <Space direction="vertical" className="w-full">
           {rowsEn.map((row, index) => (
             <Row gutter={16} align="middle" key={index}>
+             <Col span={4}>
+                <Input
+                  type="number"
+                  min={1}
+                  step={1}
+                  value={row.order}
+                  onChange={(e) => {
+                    const val = Number(e.target.value);
+                    if (val >= 1) {
+                      updateRowEn(index, 'order', val);
+                    }
+                  }} placeholder="Order"
+                />
+              </Col>
+
               <Col span={6}>
                 <Input
                   value={row.label}
@@ -156,20 +171,6 @@ export function Fields() {
                   value={row.url}
                   onChange={(e) => updateRowEn(index, 'url', e.target.value)}
                   placeholder="URL"
-                />
-              </Col>
-              <Col span={4}>
-                <Input
-                  type="number"
-                  min={1}
-                  step={1}
-                  value={row.order}
-                  onChange={(e) => {
-                    const val = Number(e.target.value);
-                    if (val >= 1) {
-                      updateRowEn(index, 'order', val);
-                    }
-                  }} placeholder="Order"
                 />
               </Col>
               <Col span={8}>
@@ -193,6 +194,15 @@ export function Fields() {
         <Space direction="vertical" className="w-full">
           {rowsAm.map((row, index) => (
             <Row gutter={16} align="middle" key={index}>
+                <Col span={4}>
+                <Input
+                  type="number"
+                  value={row.order}
+                  onChange={(e) => updateRowAm(index, 'order', Number(e.target.value))}
+                  placeholder="Հերթականություն"
+                />
+              </Col>
+
               <Col span={6}>
                 <Input
                   value={row.label}
@@ -205,14 +215,6 @@ export function Fields() {
                   value={row.url}
                   onChange={(e) => updateRowAm(index, 'url', e.target.value)}
                   placeholder="Հասցե"
-                />
-              </Col>
-              <Col span={4}>
-                <Input
-                  type="number"
-                  value={row.order}
-                  onChange={(e) => updateRowAm(index, 'order', Number(e.target.value))}
-                  placeholder="Հերթականություն"
                 />
               </Col>
               <Col span={8}>
@@ -236,21 +238,7 @@ export function Fields() {
         <Space direction="vertical" className="w-full">
           {rowsRu.map((row, index) => (
             <Row gutter={16} align="middle" key={index}>
-              <Col span={6}>
-                <Input
-                  value={row.label}
-                  onChange={(e) => updateRowRu(index, 'label', e.target.value)}
-                  placeholder="Метка"
-                />
-              </Col>
-              <Col span={6}>
-                <Input
-                  value={row.url}
-                  onChange={(e) => updateRowRu(index, 'url', e.target.value)}
-                  placeholder="Ссылка"
-                />
-              </Col>
-              <Col span={4}>
+                 <Col span={4}>
                 <Input
                   type="number"
                   min={1}
@@ -263,6 +251,21 @@ export function Fields() {
                     }
                   }}
                   placeholder="Порядок"
+                />
+              </Col>
+
+              <Col span={6}>
+                <Input
+                  value={row.label}
+                  onChange={(e) => updateRowRu(index, 'label', e.target.value)}
+                  placeholder="Метка"
+                />
+              </Col>
+              <Col span={6}>
+                <Input
+                  value={row.url}
+                  onChange={(e) => updateRowRu(index, 'url', e.target.value)}
+                  placeholder="Ссылка"
                 />
               </Col>
               <Col span={8}>

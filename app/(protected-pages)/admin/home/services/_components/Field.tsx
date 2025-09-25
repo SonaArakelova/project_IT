@@ -109,6 +109,8 @@ return (
           <Row gutter={16} align="middle" key={index}>
              <Col span={4}>
               <Input
+               type="number"
+                min={1}
                 placeholder="Order"
                 value={service.order}
                 onChange={(e) => updateService(index, 'order', e.target.value)}
@@ -161,6 +163,8 @@ return (
           <Row gutter={16} align="middle" key={index}>
               <Col span={4}>
               <Input
+               type="number"
+                min={1}
                 placeholder="Հերթականություն"
                 value={service.order}
                 onChange={(e) => updateService(index, 'order', e.target.value)}
@@ -210,6 +214,8 @@ return (
           <Row gutter={16} align="middle" key={index}>
               <Col span={4}>
               <Input
+               type="number"
+                min={1}
                 placeholder="Порядок"
                 value={service.order}
                 onChange={(e) => updateService(index, 'order', e.target.value)}
