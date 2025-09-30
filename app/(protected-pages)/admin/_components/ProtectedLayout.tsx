@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
   DesktopOutlined,
-  CustomerServiceOutlined,
   FileOutlined,
   PieChartOutlined,
   TeamOutlined,
@@ -40,11 +39,10 @@ const items: MenuItem[] = [
   getItem(<Link href="/admin/navbar">Navbar</Link>, '/admin/navbar', <DesktopOutlined />),
 
   getItem('Home Page', 'sub1', <UserOutlined />, [
-    getItem(<Link href="/admin/home/services">Services</Link>, '/admin/home/services', <CustomerServiceOutlined />),
+    getItem(<Link href="/admin/home/services">Services</Link>, '/admin/home/services', ),
 
     getItem(<Link href="/admin/home/slider">Slider</Link>, '/admin/home/slider'),
     getItem(<Link href="/admin/home/top-products">Top Products</Link>, '/admin/home/top-products'),
-    getItem(<Link href="/admin/home/alex">Alex</Link>, '/admin/home/alex'),
   ]),
   getItem('Team', 'sub2', <TeamOutlined />, [
     getItem(<Link href="/admin/team/team1">Team 1</Link>, '/admin/team/team1'),

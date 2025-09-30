@@ -1,10 +1,10 @@
-import { Field } from "./_components/Field";
+import { Fields } from "./_components/Fields";
 
 
 export default function page() {
   return (
     <div>
-        <Field/> 
+        <Fields/> 
         </div>
   )
 }
