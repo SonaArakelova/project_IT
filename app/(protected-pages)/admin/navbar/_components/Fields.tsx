@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react';
-import { Button, Row, Col, Input, Select, Space , Switch} from 'antd';
+import { Button, Row, Col, Input, Select, Space , Switch, Modal} from 'antd';
 import '@ant-design/v5-patch-for-react-19';
 
 
@@ -139,6 +139,25 @@ export function Fields() {
     console.log(`Saving row ${index + 1}:`, row);
   };
 
+  const confirmDelete = (lang: string, index: number) => {
+  Modal.confirm({
+    title:
+      lang === 'en'
+        ? 'Are you sure you want to delete this row?'
+        : lang === 'am'
+        ? 'Վստա՞հ եք, որ ուզում եք ջնջել այս տողը։'
+        : 'Вы уверены, что хотите удалить эту строку?',
+    okText:
+      lang === 'en' ? 'Yes, Delete' : lang === 'am' ? 'Այո, Ջնջել' : 'Да, удалить',
+    cancelText: lang === 'en' ? 'Cancel' : lang === 'am' ? 'Չեղարկել' : 'Отмена',
+    onOk() {
+      if (lang === 'en') deleteRowEn(index);
+      else if (lang === 'am') deleteRowAm(index);
+      else if (lang === 'ru') deleteRowRu(index);
+          },
+        });
+   };
+
 
   const addRow = () => {
     if (selectedLang === 'en') addRowEn();
@@ -223,7 +242,7 @@ export function Fields() {
                   disabled={!row.visible}>Save</Button>
                   <Button
                     danger
-                    onClick={() => deleteRowEn(index)}
+                    onClick={() => confirmDelete('en', index)}
                     disabled={!row.visible}
                   > Delete
                   </Button>
@@ -288,7 +307,7 @@ export function Fields() {
                     >Պահպանել
                     </Button>
                   <Button danger 
-                  onClick={() => deleteRowAm(index)}
+                  onClick={() => confirmDelete('am', index)}
                   disabled={!row.visible}
                   >
                     Ջնջել
@@ -359,7 +378,7 @@ export function Fields() {
                   disabled={!row.visible}
                   >Сохранить</Button>
                   <Button danger 
-                  onClick={() => deleteRowRu(index)} 
+                  onClick={() => confirmDelete('ru', index)} 
                   disabled={!row.visible}>
                     Удалить
                   </Button>

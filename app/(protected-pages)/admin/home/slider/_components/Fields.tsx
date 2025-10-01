@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Button, Row, Col, Input, Select, Space, Switch } from 'antd';
+import { Button, Row, Col, Input, Select, Space, Switch, Modal } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import '@ant-design/v5-patch-for-react-19';
 
@@ -143,12 +143,33 @@ export function Fields() {
 
     console.log(`Saving (${selectedLang.toUpperCase()}) row ${index + 1}:`, row);
   };
+  const confirmDelete = (lang: string, index: number) => {
+  Modal.confirm({
+    title:
+      lang === 'en'
+        ? 'Are you sure you want to delete this row?'
+        : lang === 'am'
+        ? 'Վստա՞հ եք, որ ուզում եք ջնջել այս տողը։'
+        : 'Вы уверены, что хотите удалить эту строку?',
+    okText:
+      lang === 'en' ? 'Yes, Delete' : lang === 'am' ? 'Այո, Ջնջել' : 'Да, удалить',
+    cancelText: lang === 'en' ? 'Cancel' : lang === 'am' ? 'Չեղարկել' : 'Отмена',
+    onOk() {
+      if (lang === 'en') deleteRowEn(index);
+      else if (lang === 'am') deleteRowAm(index);
+      else if (lang === 'ru') deleteRowRu(index);
+    },
+  });
+};
+
 
   const addRow = () => {
     if (selectedLang === 'en') addRowEn();
     else if (selectedLang === 'am') addRowAm();
     else if (selectedLang === 'ru') addRowRu();
   };
+
+
 
   return (
     <Space className="w-full" direction="vertical">
@@ -227,7 +248,7 @@ export function Fields() {
                   </Button>
                   <Button
                     danger
-                    onClick={() => deleteRowEn(index)}
+                    onClick={() => confirmDelete('en', index)}
                     disabled={!row.visible}
                   >
                     Delete
@@ -300,7 +321,7 @@ export function Fields() {
                   </Button>
                   <Button
                     danger
-                    onClick={() => deleteRowAm(index)}
+                    onClick={() => confirmDelete('am', index)}
                     disabled={!row.visible}
                   >
                     Ջնջել
@@ -374,7 +395,7 @@ export function Fields() {
                   </Button>
                   <Button
                     danger
-                    onClick={() => deleteRowRu(index)}
+                    onClick={() => confirmDelete('ru', index)}
                     disabled={!row.visible}
                   >
                     Удалить

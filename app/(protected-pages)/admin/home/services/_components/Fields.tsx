@@ -2,7 +2,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Button, Row, Col, Input, Select, Space, Switch } from 'antd';
+import { Button, Row, Col, Input, Select, Space, Switch, Modal } from 'antd';
 import {
   SettingOutlined,
   ToolOutlined,
@@ -191,6 +191,36 @@ const toggleVisibility = (index: number) => {
 };
 
 
+const confirmDeleteService = (
+  lang: string,
+  index: number,
+  deleteFn: (index: number) => void
+) => {
+  Modal.confirm({
+    title:
+      lang === 'en'
+        ? 'Are you sure you want to delete this service?'
+        : lang === 'am'
+        ? 'Վստա՞հ եք, որ ուզում եք ջնջել այս ծառայությունը։'
+        : 'Вы уверены, что хотите удалить эту услугу?',
+    okText:
+      lang === 'en'
+        ? 'Yes, Delete'
+        : lang === 'am'
+        ? 'Այո, Ջնջել'
+        : 'Да, удалить',
+    cancelText:
+      lang === 'en'
+        ? 'Cancel'
+        : lang === 'am'
+        ? 'Չեղարկել'
+        : 'Отмена',
+    onOk() {
+      deleteFn(index);
+    },
+  });
+};
+
 
 
 return (
@@ -269,7 +299,7 @@ return (
                 >Save</Button>
                 
                 <Button danger 
-                onClick={() => deleteService(index)}
+                onClick={() => confirmDeleteService(selectedLang, index, deleteService)}
                   disabled={!service.visible}
                   >Delete</Button>
                 <Switch
@@ -340,7 +370,7 @@ return (
                 disabled={!service.visible}
                 >Պահպանել</Button>
                 <Button danger 
-                onClick={() => deleteService(index)}
+                onClick={() => confirmDeleteService(selectedLang, index, deleteService)}
                 disabled={!service.visible}
                 >Ջնջել</Button>
                 <Switch
@@ -411,7 +441,7 @@ return (
                disabled={!service.visible}
                >Сохранить</Button>
                 <Button danger 
-                onClick={() => deleteService(index)}
+                onClick={() => confirmDeleteService(selectedLang, index, deleteService)}
                 disabled={!service.visible}
                 >Удалить</Button>
                 <Switch
